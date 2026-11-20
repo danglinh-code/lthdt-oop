@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ Thống Ôn Tập &amp; Thi Trắc Nghiệm Lập Trình Hướng Đối Tượng C#</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand" onclick="app.navigate('home')">
+        <div class="brand-badge">OOP C#</div>
+        <div class="brand-text">
+          <h1>Lập Trình Hướng Đối Tượng (C#)</h1>
+          <p>Hệ thống Ôn tập &amp; Thi Trắc nghiệm theo Đề cương (Mã HP: OOP-C# • 284 Câu)</p>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-btn active" id="nav-home" onclick="app.navigate('home')">
+          🏠 Tổng quan
+        </button>
+        <button class="nav-btn" id="nav-practice-config" onclick="app.navigate('practice-config')">
+          ⚡ Ôn tập (Hiện đáp án ngay)
+        </button>
+        <button class="nav-btn" id="nav-chapter-config" onclick="app.navigate('chapter-config')">
+          📘 1. Làm bài theo Chương
+        </button>
+        <button class="nav-btn" id="nav-full-config" onclick="app.navigate('full-config')">
+          🎓 2. Làm bài Toàn bộ
+        </button>
+        <button class="nav-btn" id="nav-bank" onclick="app.navigate('bank')">
+          📚 Ngân hàng &amp; Đề cương
+        </button>
+        <button class="nav-btn" id="nav-history" onclick="app.navigate('history')">
+          📊 Điểm &amp; Lịch sử
+        </button>
+        <button class="theme-btn" id="theme-toggle" onclick="app.toggleTheme()" title="Đổi giao diện Sáng/Tối">
+          🌙
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="main-container">
+    <!-- ==================== 1. VIEW: HOME ==================== -->
+    <section id="view-home" class="view-section active">
+      <div class="hero-card">
+        <div class="hero-info">
+          <div class="course-tag">Trường ĐHSPKT Hưng Yên • Khoa Công nghệ Thông tin</div>
+          <h2>Hệ thống Ôn tập &amp; Chấm điểm Thang 10 Lập trình Hướng đối tượng với C#</h2>
+          <p>
+            Được xây dựng chuẩn hóa từ <strong>Ngân hàng 284 câu hỏi &amp; đáp án trắc nghiệm thuần OOP C#</strong> (gồm <strong>124 câu Đề cương chuẩn UTEHY + 160 câu Luyện tập OOP C#</strong> không trùng lặp) kết hợp phân bổ nội dung <strong>8 chương kiến thức</strong> trong <em>Đề cương bài giảng Lập trình hướng đối tượng với C# (Khoa CNTT – UTEHY)</em>. Tích hợp chế độ hiện đáp án ngay khi chọn, bộ đếm thời gian tùy chỉnh, chấm điểm thang 10 và giải thích chi tiết từng câu.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-success btn-lg" onclick="app.navigate('practice-config')">
+              ⚡ Ôn tập: Hiện đáp án ngay khi chọn
+            </button>
+            <button class="btn btn-outline btn-lg" style="border-color: var(--success); color: var(--success);" onclick="app.quickStartSyllabusPractice()">
+              📘 Ôn ngay 124 câu Đề cương chuẩn
+            </button>
+            <button class="btn btn-primary btn-lg" onclick="app.navigate('chapter-config')">
+              📘 1. Làm bài riêng từng Chương
+            </button>
+            <button class="btn btn-blue btn-lg" onclick="app.navigate('full-config')">
+              🎓 2. Làm bài Tổng toàn bộ kiến thức
+            </button>
+            <button class="btn btn-outline btn-lg" onclick="app.openPdfModal(1, 'Đề cương bài giảng Lập trình hướng đối tượng với C#')">
+              📖 Mở Đề cương PDF
+            </button>
+          </div>
+        </div>
+        <div class="hero-stats" id="home-quick-stats">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- THREE MAIN FUNCTIONS OVERVIEW -->
+      <div class="triple-modes-grid">
+        <div class="mode-feature-card mode-3">
+          <div>
+            <span class="mode-badge">Chế độ Ôn tập • Phản hồi tức thì</span>
+            <h3>⚡ Ôn Tập Hiển Thị Đáp Án Ngay Sau Khi Chọn</h3>
+            <p>Chức năng chuyên biệt phục vụ học sâu và nắm chắc bản chất OOP C# — tách riêng hoàn toàn với 2 chức năng kiểm tra:</p>
+            <ul class="feature-list">
+              <li><strong>Báo Đúng / Sai và hiện Đáp án đúng ngay lập tức</strong> ngay sau khi bạn vừa click chọn phương án.</li>
+              <li>Hiển thị ngay <strong>Giải thích chi tiết OOP C#</strong> và nút mở đúng trang Đề cương PDF tại câu vừa chọn.</li>
+              <li>Tùy chọn ôn theo từng Chương (1–8), từng Mục, toàn bộ <strong>284 câu</strong> (hoặc lọc riêng <strong>124 câu Đề cương chuẩn</strong> / <strong>160 câu Luyện tập</strong>), câu phủ định (chọn câu SAI) hoặc câu hay sai.</li>
+              <li>Cập nhật điểm Thang 10 trực tiếp theo từng câu, hỗ trợ nút <em>"Chọn lại câu này"</em> và tự chuyển câu khi làm đúng.</li>
+            </ul>
+          </div>
+          <div>
+            <button class="btn btn-success" style="width: 100%" onclick="app.navigate('practice-config')">
+              ⚡ Mở Chế độ Ôn tập Hiện đáp án ngay →
+            </button>
+          </div>
+        </div>
+
+        <div class="mode-feature-card mode-1">
+          <div>
+            <span class="mode-badge">Chức năng 1 • Thiết lập riêng</span>
+            <h3>📘 Làm Bài Kiểm Tra Riêng Từng Chương Kiến Thức</h3>
+            <p>Kiểm tra đánh giá từng chương (Chương 1 đến Chương 8) với thiết lập thời gian và thang điểm 10 độc lập:</p>
+            <ul class="feature-list">
+              <li>Chọn riêng bất kỳ chương nào (1–8) hoặc lọc sâu theo từng Mục kiến thức trong chương.</li>
+              <li>Tùy chỉnh thời gian làm bài riêng (Không giới hạn, chọn mốc phút, tự nhập phút:giây, hoặc tính giây/câu).</li>
+              <li>Tính điểm theo <strong>thang điểm 10 riêng cho từng chương</strong>, lưu kỷ lục điểm cao nhất và tiến độ từng chương.</li>
+              <li>Chấm điểm, hiển thị đáp án Đúng - Sai và giải thích chi tiết <strong>sau khi hoàn thành bài</strong>.</li>
+            </ul>
+          </div>
+          <div>
+            <button class="btn btn-primary" style="width: 100%" onclick="app.navigate('chapter-config')">
+              ⚙️ Mở Thiết lập Làm bài theo Chương →
+            </button>
+          </div>
+        </div>
+
+        <div class="mode-feature-card mode-2">
+          <div>
+            <span class="mode-badge">Chức năng 2 • Thiết lập riêng</span>
+            <h3>🎓 Làm Bài Thi Tổng Hợp Toàn Bộ Kiến Thức</h3>
+            <p>Đánh giá toàn diện kiến thức cả 8 chương trong toàn bộ học phần với thiết lập phòng thi và ma trận đề riêng:</p>
+            <ul class="feature-list">
+              <li>Làm toàn bộ <strong>284 câu</strong> (hoặc trọn bộ <strong>124 câu Đề cương</strong> / <strong>160 câu Luyện tập</strong>), chọn quy mô đề chuẩn (40, 50, 60, 100 câu...) hoặc <strong>tự thiết lập số câu của từng chương</strong>.</li>
+              <li>Hệ thống set thời gian làm bài tùy chỉnh riêng cho kỳ thi tổng hợp (tự động nộp bài khi hết giờ).</li>
+              <li>Chấm <strong>điểm tổng theo thang 10</strong> đồng thời phân tích <strong>điểm thang 10 thành phần của cả 8 chương</strong>.</li>
+              <li>Hiển thị toàn bộ đáp án Đúng - Sai và giải thích chi tiết <strong>sau khi hoàn thành bài</strong>.</li>
+            </ul>
+          </div>
+          <div>
+            <button class="btn btn-blue" style="width: 100%" onclick="app.navigate('full-config')">
+              ⚙️ Mở Thiết lập Làm bài Toàn bộ →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 CHAPTERS BREAKDOWN -->
+      <div class="section-header">
+        <div>
+          <h3>Phân bổ 8 Chương kiến thức theo Đề cương OOP C# &amp; Ngân hàng câu hỏi (284 câu: 124 Đề cương + 160 Luyện tập)</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);">
+            Nhấn vào từng chương để luyện tập ngay, tra cứu câu hỏi hoặc đọc trang Đề cương PDF tương ứng
+          </p>
+        </div>
+      </div>
+      <div class="chapters-grid" id="home-chapters-grid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ==================== 1B. VIEW: INSTANT PRACTICE CONFIG (ÔN TẬP HIỆN ĐÁP ÁN NGAY) ==================== -->
+    <section id="view-practice-config" class="view-section">
+      <div class="config-layout">
+        <div class="panel-card">
+          <span class="mode-badge" style="background: var(--success-bg); color: var(--success);">Chức năng Ôn tập chuyên biệt • Tách riêng với 2 chức năng kiểm tra</span>
+          <h3>⚡ Thiết lập Ôn Tập Hiển Thị Đáp Án Ngay Sau Khi Chọn</h3>
+          <p class="panel-subtitle">
+            Ngay khi bạn click chọn một phương án (A, B, C, D...), hệ thống sẽ lập tức báo <strong>Đúng / Sai</strong>, tô sáng <strong>Đáp án đúng</strong> và mở ngay khung <strong>Giải thích chi tiết + Trang Đề cương PDF</strong> để bạn ghi nhớ kiến thức OOP C# tại chỗ.
+          </p>
+
+          <!-- 0. Chọn Nguồn bộ câu hỏi -->
+          <div class="form-group">
+            <label class="form-label">Nguồn bộ câu hỏi ôn tập</label>
+            <div class="preset-chips" id="prac-source-chips">
+              <button type="button" class="chip-btn active" onclick="app.setPracticeSource('all')">📚 Tất cả 284 câu (Đầy đủ)</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeSource('syllabus')">📘 Bộ 124 câu Đề cương chuẩn</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeSource('practice')">💻 Bộ 160 câu Luyện tập OOP C#</button>
+            </div>
+          </div>
+
+          <!-- 1. Chọn phạm vi kiến thức -->
+          <div class="form-group">
+            <label class="form-label" for="prac-scope-select">1. Chọn Phạm vi kiến thức muốn ôn tập</label>
+            <select id="prac-scope-select" class="form-select" onchange="app.onPracticeScopeChange()">
+              <!-- Populated by JS: Toàn bộ 8 chương (284 câu) hoặc Chương 1..8 -->
+            </select>
+            <div class="form-hint" id="prac-scope-hint"></div>
+          </div>
+
+          <!-- 2. Chọn Mục kiến thức (khi chọn riêng 1 chương) -->
+          <div class="form-group" id="prac-section-group">
+            <label class="form-label" for="prac-section-select">2. Lọc theo Mục kiến thức trong chương</label>
+            <select id="prac-section-select" class="form-select" onchange="app.updatePracticePreview()">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- 3. Chọn Bộ lọc & Số lượng câu hỏi -->
+          <div class="form-group">
+            <label class="form-label">3. Số lượng &amp; Nhóm câu hỏi ôn tập</label>
+            <div class="preset-chips" id="prac-qcount-chips">
+              <button type="button" class="chip-btn active" onclick="app.setPracticeQCountMode('all')">Tất cả câu trong phạm vi</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeQCountMode('10')">10 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeQCountMode('20')">20 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeQCountMode('30')">30 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeQCountMode('50')">50 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeQCountMode('custom')">Tự nhập số câu</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeQCountMode('negative')">Chỉ câu chọn đáp án SAI</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeQCountMode('wrong')">Chỉ câu từng làm sai</button>
+            </div>
+            <div id="prac-custom-qcount-wrap" style="display: none; margin-top: 8px; max-width: 240px;">
+              <div class="input-with-unit">
+                <input type="number" id="prac-custom-qcount" min="1" max="284" value="20" onchange="app.updatePracticePreview()" />
+                <span>câu hỏi</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Thời gian ôn tập tùy chỉnh riêng -->
+          <div class="form-group">
+            <label class="form-label">4. Thời gian ôn tập tùy chỉnh (Độc lập cho chế độ Ôn tập)</label>
+            <div class="preset-chips" id="prac-timer-chips">
+              <button type="button" class="chip-btn active" onclick="app.setPracticeTimerPreset('none')">Không giới hạn (Khuyên dùng)</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeTimerPreset('15')">15 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeTimerPreset('30')">30 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeTimerPreset('45')">45 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeTimerPreset('per_question')">Theo giây/câu</button>
+              <button type="button" class="chip-btn" onclick="app.setPracticeTimerPreset('custom')">Tự nhập phút : giây</button>
+            </div>
+
+            <div id="prac-timer-custom-wrap" class="inline-inputs" style="display: none; margin-top: 10px;">
+              <div class="input-with-unit">
+                <input type="number" id="prac-custom-min" min="0" max="300" value="20" onchange="app.updatePracticePreview()" />
+                <span>Phút</span>
+              </div>
+              <div class="input-with-unit">
+                <input type="number" id="prac-custom-sec" min="0" max="59" value="0" onchange="app.updatePracticePreview()" />
+                <span>Giây</span>
+              </div>
+            </div>
+
+            <div id="prac-timer-perq-wrap" style="display: none; margin-top: 10px; max-width: 260px;">
+              <div class="input-with-unit">
+                <input type="number" id="prac-sec-per-q" min="10" max="300" value="45" onchange="app.updatePracticePreview()" />
+                <span>Giây / 1 câu</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Cơ chế phản hồi đáp án ngay & trộn câu -->
+          <div class="form-group">
+            <label class="form-label">5. Tùy chọn hiển thị đáp án ngay &amp; hỗ trợ ghi nhớ</label>
+            <div class="toggle-row">
+              <label for="prac-lock-first">Khóa phương án sau lần chọn đầu tiên để tính điểm Thang 10 chính xác (vẫn có nút "Chọn lại câu này")</label>
+              <input type="checkbox" id="prac-lock-first" checked onchange="app.updatePracticePreview()" />
+            </div>
+            <div class="toggle-row">
+              <label for="prac-auto-next">Tự động chuyển sang câu tiếp theo (sau 1.2 giây) khi bạn chọn ĐÚNG</label>
+              <input type="checkbox" id="prac-auto-next" onchange="app.updatePracticePreview()" />
+            </div>
+            <div class="toggle-row">
+              <label for="prac-shuffle-q">Xáo trộn ngẫu nhiên thứ tự câu hỏi</label>
+              <input type="checkbox" id="prac-shuffle-q" checked onchange="app.updatePracticePreview()" />
+            </div>
+            <div class="toggle-row">
+              <label for="prac-shuffle-opt">Đảo ngẫu nhiên vị trí các đáp án (A, B, C, D)</label>
+              <input type="checkbox" id="prac-shuffle-opt" onchange="app.updatePracticePreview()" />
+            </div>
+          </div>
+
+          <div style="margin-top: 22px;">
+            <button class="btn btn-success btn-lg" style="width: 100%" onclick="app.startPracticeQuiz()">
+              ⚡ Bắt đầu Ôn Tập (Chọn tới đâu – Hiện Đáp Án &amp; Giải Thích tới đó)
+            </button>
+          </div>
+        </div>
+
+        <!-- Tóm tắt cấu hình & Lịch sử Ôn tập tức thì -->
+        <div>
+          <div class="panel-card" style="margin-bottom: 20px;">
+            <h3>💡 Tóm tắt Phiên Ôn Tập Phản Hồi Tức Thì</h3>
+            <div class="scale10-preview" id="prac-config-summary" style="border-left-color: var(--success);">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3>⚡ Lịch sử các phiên Ôn tập Hiện đáp án ngay</h3>
+            <p class="panel-subtitle">Lưu riêng biệt với kết quả kiểm tra từng chương và thi tổng hợp</p>
+            <div id="prac-scores-board">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. VIEW: CHAPTER CONFIG (CHỨC NĂNG 1) ==================== -->
+    <section id="view-chapter-config" class="view-section">
+      <div class="config-layout">
+        <div class="panel-card">
+          <span class="mode-badge" style="background: var(--primary-light); color: var(--primary);">Chức năng 1 • Thiết lập riêng từng chương</span>
+          <h3>📘 Thiết lập Ôn tập &amp; Kiểm tra Riêng Từng Chương</h3>
+          <p class="panel-subtitle">
+            Mọi cài đặt về số câu, thời gian làm bài và thang điểm 10 tại đây được lưu riêng cho Chức năng 1 (Theo chương).
+          </p>
+
+          <!-- Nguồn bộ câu hỏi -->
+          <div class="form-group">
+            <label class="form-label">Nguồn bộ câu hỏi của chương</label>
+            <div class="preset-chips" id="ch-source-chips">
+              <button type="button" class="chip-btn active" onclick="app.setChapterSource('all')">📚 Tất cả câu của chương (Bộ 284)</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterSource('syllabus')">📘 Chỉ câu Đề cương chuẩn (Bộ 124)</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterSource('practice')">💻 Chỉ câu Luyện tập OOP C# (Bộ 160)</button>
+            </div>
+          </div>
+
+          <!-- Chọn Chương -->
+          <div class="form-group">
+            <label class="form-label" for="ch-select">1. Chọn Chương kiến thức trong Đề cương OOP C#</label>
+            <select id="ch-select" class="form-select" onchange="app.onChapterSelectChange()">
+              <!-- Populated by JS -->
+            </select>
+            <div class="form-hint" id="ch-select-hint"></div>
+          </div>
+
+          <!-- Chọn Mục trong chương -->
+          <div class="form-group">
+            <label class="form-label" for="ch-section-select">2. Phạm vi Mục kiến thức trong chương</label>
+            <select id="ch-section-select" class="form-select" onchange="app.onChapterSectionChange()">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- Chọn Số lượng câu hỏi -->
+          <div class="form-group">
+            <label class="form-label">3. Số lượng câu hỏi &amp; Bộ lọc</label>
+            <div class="preset-chips" id="ch-qcount-chips">
+              <button type="button" class="chip-btn active" onclick="app.setChapterQCountMode('all')">Tất cả câu trong phạm vi</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterQCountMode('10')">10 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterQCountMode('15')">15 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterQCountMode('20')">20 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterQCountMode('custom')">Tự nhập số câu</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterQCountMode('wrong')">Chỉ câu từng làm sai</button>
+            </div>
+            <div id="ch-custom-qcount-wrap" style="display: none; margin-top: 8px; max-width: 240px;">
+              <div class="input-with-unit">
+                <input type="number" id="ch-custom-qcount" min="1" max="80" value="10" onchange="app.updateChapterPreview()" />
+                <span>câu hỏi</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thiết lập thời gian tùy chỉnh riêng cho Chức năng 1 -->
+          <div class="form-group">
+            <label class="form-label">4. Thiết lập thời gian làm bài tùy chỉnh (Chức năng 1)</label>
+            <div class="preset-chips" id="ch-timer-chips">
+              <button type="button" class="chip-btn" onclick="app.setChapterTimerPreset('none')">Không giới hạn</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterTimerPreset('10')">10 phút</button>
+              <button type="button" class="chip-btn active" onclick="app.setChapterTimerPreset('15')">15 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterTimerPreset('20')">20 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterTimerPreset('30')">30 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterTimerPreset('per_question')">Theo giây/câu</button>
+              <button type="button" class="chip-btn" onclick="app.setChapterTimerPreset('custom')">Tự nhập phút : giây</button>
+            </div>
+
+            <div id="ch-timer-custom-wrap" class="inline-inputs" style="display: none; margin-top: 10px;">
+              <div class="input-with-unit">
+                <input type="number" id="ch-custom-min" min="0" max="300" value="15" onchange="app.updateChapterPreview()" />
+                <span>Phút</span>
+              </div>
+              <div class="input-with-unit">
+                <input type="number" id="ch-custom-sec" min="0" max="59" value="0" onchange="app.updateChapterPreview()" />
+                <span>Giây</span>
+              </div>
+            </div>
+
+            <div id="ch-timer-perq-wrap" style="display: none; margin-top: 10px; max-width: 260px;">
+              <div class="input-with-unit">
+                <input type="number" id="ch-sec-per-q" min="10" max="300" value="45" onchange="app.updateChapterPreview()" />
+                <span>Giây / 1 câu</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thiết lập Thang điểm 10 riêng cho Chức năng 1 -->
+          <div class="form-group">
+            <label class="form-label">5. Thiết lập Hệ thống tính điểm Thang 10 (Riêng từng chương)</label>
+            <div class="inline-inputs">
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Điểm đạt (Thang 10)</span>
+                <div class="input-with-unit">
+                  <input type="number" id="ch-pass-score" min="1" max="10" step="0.5" value="5.0" onchange="app.updateChapterPreview()" />
+                  <span>/ 10 điểm</span>
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Làm tròn điểm Thang 10</span>
+                <select id="ch-rounding" class="form-select" onchange="app.updateChapterPreview()">
+                  <option value="2">2 chữ số thập phân (VD: 8.33)</option>
+                  <option value="1">1 chữ số thập phân (VD: 8.3)</option>
+                  <option value="0.25">Làm tròn bậc 0.25 (VD: 8.25)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tùy chọn làm bài -->
+          <div class="form-group">
+            <label class="form-label">6. Tùy chọn trộn đề &amp; hiển thị</label>
+            <div class="toggle-row">
+              <label for="ch-shuffle-q">Đảo ngẫu nhiên thứ tự câu hỏi trong chương</label>
+              <input type="checkbox" id="ch-shuffle-q" checked onchange="app.updateChapterPreview()" />
+            </div>
+            <div class="toggle-row">
+              <label for="ch-shuffle-opt">Đảo ngẫu nhiên vị trí nội dung đáp án (A, B, C, D)</label>
+              <input type="checkbox" id="ch-shuffle-opt" onchange="app.updateChapterPreview()" />
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px;">
+            <button class="btn btn-primary btn-lg" style="flex: 1" onclick="app.startChapterQuiz()">
+              🚀 Bắt đầu Làm bài Chương đã chọn
+            </button>
+            <button class="btn btn-outline" onclick="app.openChapterPdfFromConfig()">
+              📖 Xem Đề cương Chương này
+            </button>
+          </div>
+        </div>
+
+        <!-- Bảng Tóm tắt Thiết lập & Bảng Điểm Thang 10 của 8 Chương -->
+        <div>
+          <div class="panel-card" style="margin-bottom: 20px;">
+            <h3>🎯 Tóm tắt Cấu hình Bài ôn theo Chương</h3>
+            <div class="scale10-preview" id="ch-config-summary">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3>🏆 Bảng Điểm Thang 10 Riêng Từng Chương</h3>
+            <p class="panel-subtitle">Theo dõi điểm số thang 10 cao nhất &amp; gần nhất bạn đạt được ở mỗi chương kiến thức</p>
+            <div id="ch-scores-board">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. VIEW: FULL EXAM CONFIG (CHỨC NĂNG 2) ==================== -->
+    <section id="view-full-config" class="view-section">
+      <div class="config-layout">
+        <div class="panel-card">
+          <span class="mode-badge" style="background: var(--blue-light); color: var(--blue);">Chức năng 2 • Thiết lập riêng toàn bộ kiến thức</span>
+          <h3>🎓 Thiết lập Thi &amp; Kiểm tra Tổng Toàn Bộ Kiến Thức</h3>
+          <p class="panel-subtitle">
+            Hệ thống thiết lập riêng cho bài thi tổng hợp bao quát cả 8 chương kiến thức trong Đề cương OOP C# (Tổng 284 câu: 124 câu Đề cương chuẩn + 160 câu Luyện tập OOP C#).
+          </p>
+
+          <!-- Phương thức phân bổ câu hỏi -->
+          <div class="form-group">
+            <label class="form-label">1. Quy mô đề thi &amp; Phân bổ câu hỏi toàn Đề cương</label>
+            <div class="preset-chips" id="full-qmode-chips">
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('284')">Toàn bộ 284 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('only_syllabus')">📘 Trọn bộ 124 câu Đề cương</button>
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('only_practice')">💻 Trọn bộ 160 câu Luyện tập</button>
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('40')">Đề chuẩn 40 câu</button>
+              <button type="button" class="chip-btn active" onclick="app.setFullQMode('50')">Đề chuẩn 50 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('60')">Đề 60 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('100')">Đề 100 câu</button>
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('custom_total')">Tự nhập tổng số câu</button>
+              <button type="button" class="chip-btn" onclick="app.setFullQMode('matrix')">Tùy chỉnh số câu từng chương</button>
+            </div>
+
+            <!-- Tự nhập tổng số câu -->
+            <div id="full-custom-total-wrap" style="display: none; margin-top: 10px;">
+              <div class="inline-inputs">
+                <div>
+                  <span style="font-size: 0.78rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Tổng số câu hỏi (8 – 284)</span>
+                  <div class="input-with-unit">
+                    <input type="number" id="full-custom-total-input" min="8" max="284" value="50" onchange="app.updateFullPreview()" />
+                    <span>câu hỏi</span>
+                  </div>
+                </div>
+                <div>
+                  <span style="font-size: 0.78rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Cách phân bổ giữa 8 chương</span>
+                  <select id="full-distribution-type" class="form-select" onchange="app.updateFullPreview()">
+                    <option value="proportional">Theo tỷ lệ chuẩn của Ngân hàng 284 câu</option>
+                    <option value="equal">Phân bổ đều giữa 8 chương</option>
+                    <option value="random">Ngẫu nhiên hoàn toàn trong 284 câu</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ma trận tùy chỉnh số câu từng chương -->
+            <div id="full-matrix-wrap" class="matrix-box" style="display: none;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="font-size: 0.85rem;">Thiết lập ma trận số câu cho từng chương:</strong>
+                <button type="button" class="btn btn-sm btn-subtle" onclick="app.resetFullMatrixToProportional()">Đặt về tỷ lệ 50 câu</button>
+              </div>
+              <div id="full-matrix-rows">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Thiết lập thời gian tùy chỉnh riêng cho Chức năng 2 -->
+          <div class="form-group">
+            <label class="form-label">2. Thiết lập thời gian làm bài tùy chỉnh (Chức năng 2 - Thi tổng hợp)</label>
+            <div class="preset-chips" id="full-timer-chips">
+              <button type="button" class="chip-btn" onclick="app.setFullTimerPreset('30')">30 phút</button>
+              <button type="button" class="chip-btn active" onclick="app.setFullTimerPreset('45')">45 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setFullTimerPreset('60')">60 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setFullTimerPreset('90')">90 phút</button>
+              <button type="button" class="chip-btn" onclick="app.setFullTimerPreset('none')">Không giới hạn</button>
+              <button type="button" class="chip-btn" onclick="app.setFullTimerPreset('per_question')">Theo giây/câu</button>
+              <button type="button" class="chip-btn" onclick="app.setFullTimerPreset('custom')">Tự nhập phút : giây</button>
+            </div>
+
+            <div id="full-timer-custom-wrap" class="inline-inputs" style="display: none; margin-top: 10px;">
+              <div class="input-with-unit">
+                <input type="number" id="full-custom-min" min="0" max="300" value="45" onchange="app.updateFullPreview()" />
+                <span>Phút</span>
+              </div>
+              <div class="input-with-unit">
+                <input type="number" id="full-custom-sec" min="0" max="59" value="0" onchange="app.updateFullPreview()" />
+                <span>Giây</span>
+              </div>
+            </div>
+
+            <div id="full-timer-perq-wrap" style="display: none; margin-top: 10px; max-width: 260px;">
+              <div class="input-with-unit">
+                <input type="number" id="full-sec-per-q" min="10" max="300" value="45" onchange="app.updateFullPreview()" />
+                <span>Giây / 1 câu</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thiết lập Thang điểm 10 riêng cho Chức năng 2 -->
+          <div class="form-group">
+            <label class="form-label">3. Thiết lập Hệ thống tính điểm Thang 10 (Riêng cho Tổng toàn bộ kiến thức)</label>
+            <div class="inline-inputs">
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Điểm đạt qua môn (Thang 10)</span>
+                <div class="input-with-unit">
+                  <input type="number" id="full-pass-score" min="1" max="10" step="0.5" value="5.0" onchange="app.updateFullPreview()" />
+                  <span>/ 10 điểm</span>
+                </div>
+              </div>
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); display:block; margin-bottom:4px;">Làm tròn điểm Thang 10</span>
+                <select id="full-rounding" class="form-select" onchange="app.updateFullPreview()">
+                  <option value="2">2 chữ số thập phân (VD: 8.40)</option>
+                  <option value="1">1 chữ số thập phân (VD: 8.4)</option>
+                  <option value="0.25">Làm tròn bậc 0.25 (VD: 8.50)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tùy chọn phòng thi -->
+          <div class="form-group">
+            <label class="form-label">4. Tùy chọn đề thi tổng hợp</label>
+            <div class="toggle-row">
+              <label for="full-shuffle-q">Xáo trộn ngẫu nhiên thứ tự câu hỏi giữa các chương</label>
+              <input type="checkbox" id="full-shuffle-q" checked onchange="app.updateFullPreview()" />
+            </div>
+            <div class="toggle-row">
+              <label for="full-shuffle-opt">Đảo ngẫu nhiên vị trí nội dung đáp án (A, B, C, D)</label>
+              <input type="checkbox" id="full-shuffle-opt" onchange="app.updateFullPreview()" />
+            </div>
+            <div class="toggle-row">
+              <label for="full-strict-mode">Chế độ phòng thi nghiêm túc (Không cho tạm dừng đồng hồ)</label>
+              <input type="checkbox" id="full-strict-mode" onchange="app.updateFullPreview()" />
+            </div>
+          </div>
+
+          <div style="margin-top: 22px;">
+            <button class="btn btn-blue btn-lg" style="width: 100%" onclick="app.startFullQuiz()">
+              🎓 Bắt đầu Thi Tổng Hợp Toàn Bộ Kiến Thức
+            </button>
+          </div>
+        </div>
+
+        <!-- Tóm tắt cấu hình & Thống kê điểm Tổng hợp -->
+        <div>
+          <div class="panel-card" style="margin-bottom: 20px;">
+            <h3>📋 Ma trận &amp; Thang điểm 10 Bài Thi Tổng Hợp</h3>
+            <div class="scale10-preview" id="full-config-summary">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3>📈 Thành tích Thi Tổng Hợp (Thang điểm 10)</h3>
+            <p class="panel-subtitle">Kết quả các lần làm bài kiểm tra tổng toàn bộ kiến thức học phần</p>
+            <div id="full-scores-board">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. VIEW: ACTIVE QUIZ ==================== -->
+    <section id="view-quiz" class="view-section">
+      <div class="quiz-StickyBar">
+        <div class="quiz-title-group">
+          <h3 id="quiz-active-title">Đang làm bài...</h3>
+          <p id="quiz-active-subtitle"></p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div class="live-score-pill" id="quiz-live-score-pill" style="display: none;">
+            ⚡ Đúng: 0 | Sai: 0 • Điểm tạm tính: 0.00/10
+          </div>
+          <div class="timer-box" id="quiz-timer-box">
+            <span>⏱️ Thời gian:</span>
+            <span class="timer-digits" id="quiz-timer-display">00:00</span>
+            <button type="button" class="btn btn-sm btn-subtle" id="quiz-pause-btn" onclick="app.togglePauseQuiz()">
+              Tạm dừng
+            </button>
+          </div>
+
+          <button type="button" class="btn btn-sm btn-outline" id="quiz-viewmode-btn" onclick="app.toggleQuizDisplayMode()">
+            📄 Xem tất cả câu
+          </button>
+
+          <button type="button" class="btn btn-primary" id="quiz-submit-top-btn" onclick="app.confirmSubmitQuiz()">
+            ✅ Nộp bài &amp; Chấm điểm
+          </button>
+        </div>
+      </div>
+
+      <div class="quiz-layout">
+        <!-- Khu vực hiển thị câu hỏi -->
+        <div id="quiz-questions-container">
+          <!-- Populated by JS (single mode or scroll-all mode) -->
+        </div>
+
+        <!-- Bảng danh sách câu hỏi (Palette) -->
+        <aside class="palette-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h4 style="font-size: 0.96rem;">Bảng câu hỏi</h4>
+            <span class="pill" id="quiz-progress-pill">0 / 0 đã chọn</span>
+          </div>
+
+          <div class="palette-grid" id="quiz-palette-grid">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="palette-legend">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: var(--primary);"></span> Đã trả lời
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: var(--bg-subtle); border: 1px solid var(--border-strong);"></span> Chưa làm
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #f59e0b; border-radius: 50%;"></span> Đánh dấu
+            </div>
+          </div>
+
+          <div style="font-size: 0.76rem; color: var(--text-muted); background: var(--bg-subtle); padding: 9px 10px; border-radius: 8px; margin-bottom: 12px;">
+            💡 <strong>Phím tắt nhanh:</strong> Nhấn phím <code>A, B, C, D</code> (hoặc <code>1, 2, 3, 4</code>) để chọn đáp án; <code>← / →</code> để chuyển câu; <code>F</code> để đánh dấu câu phân vân.
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn btn-primary" style="flex: 1" onclick="app.confirmSubmitQuiz()">
+              ✅ Hoàn thành bài
+            </button>
+            <button type="button" class="btn btn-outline" onclick="app.cancelQuiz()">
+              Thoát
+            </button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ==================== 5. VIEW: QUIZ RESULTS & EXPLANATIONS ==================== -->
+    <section id="view-result" class="view-section">
+      <div id="result-summary-container">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Bộ lọc xem đáp án đúng-sai và giải thích -->
+      <div class="review-filter-bar">
+        <div>
+          <h3 style="font-size: 1.08rem;">Chi tiết Đáp án Đúng - Sai &amp; Giải thích sau khi hoàn thành bài</h3>
+          <p style="font-size: 0.82rem; color: var(--text-secondary);">
+            Đối chiếu đáp án bạn chọn với đáp án chính thức kèm giải thích chi tiết OOP C# và trang Đề cương PDF
+          </p>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <div class="preset-chips" style="margin-bottom: 0;" id="result-filter-chips">
+            <button type="button" class="chip-btn active" onclick="app.setResultFilter('all')">Tất cả</button>
+            <button type="button" class="chip-btn" onclick="app.setResultFilter('wrong')">❌ Câu Sai</button>
+            <button type="button" class="chip-btn" onclick="app.setResultFilter('unanswered')">⚠️ Chưa làm</button>
+            <button type="button" class="chip-btn" onclick="app.setResultFilter('correct')">✅ Câu Đúng</button>
+            <button type="button" class="chip-btn" onclick="app.setResultFilter('flagged')">🚩 Đã đánh dấu</button>
+          </div>
+          <select id="result-chapter-filter" class="form-select" style="width: auto; padding: 6px 10px; font-size: 0.82rem;" onchange="app.renderResultQuestionsList()">
+            <option value="all">Tất cả chương trong bài</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="result-questions-list">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ==================== 6. VIEW: QUESTION BANK & TEXTBOOK ==================== -->
+    <section id="view-bank" class="view-section">
+      <div class="panel-card" style="margin-bottom: 20px;">
+        <div class="section-header" style="margin-bottom: 12px;">
+          <div>
+            <h3>📚 Tra cứu Ngân hàng 284 Câu hỏi OOP C# &amp; Đề cương PDF</h3>
+            <p style="font-size: 0.86rem; color: var(--text-secondary);">
+              Tìm kiếm câu hỏi theo từ khóa, lọc theo nguồn bộ câu hỏi (124 câu Đề cương chuẩn / 160 câu Luyện tập), 8 chương &amp; các mục kiến thức
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-subtle" id="bank-toggle-ans-btn" onclick="app.toggleBankShowAnswers()">
+              👁️ Hiện tất cả Đáp án &amp; Giải thích
+            </button>
+            <button type="button" class="btn btn-primary" onclick="app.openPdfModal(1, 'Đề cương bài giảng Lập trình hướng đối tượng với C#')">
+              📖 Mở Đề cương OOP C# PDF (137 trang)
+            </button>
+          </div>
+        </div>
+
+        <div class="inline-inputs" style="grid-template-columns: 1.3fr 0.9fr 1fr 0.9fr 0.8fr;">
+          <input type="text" id="bank-search-input" class="form-input" placeholder="🔍 Tìm kiếm nội dung câu hỏi, phương án hoặc giải thích..." oninput="app.renderBankList()" />
+          <select id="bank-source-select" class="form-select" onchange="app.onBankSourceChange()">
+            <option value="all">📚 Tất cả 284 câu</option>
+            <option value="syllabus">📘 Bộ 124 câu Đề cương chuẩn</option>
+            <option value="practice">💻 Bộ 160 câu Luyện tập OOP C#</option>
+          </select>
+          <select id="bank-chapter-select" class="form-select" onchange="app.onBankChapterChange()">
+            <option value="all">Tất cả 8 Chương (284 câu)</option>
+          </select>
+          <select id="bank-section-select" class="form-select" onchange="app.renderBankList()">
+            <option value="all">Tất cả các Mục kiến thức</option>
+          </select>
+          <select id="bank-type-select" class="form-select" onchange="app.renderBankList()">
+            <option value="all">Mọi dạng câu hỏi</option>
+            <option value="negative">Câu hỏi phủ định (Chọn câu SAI)</option>
+            <option value="wrong_history">Câu bạn từng làm sai</option>
+          </select>
+        </div>
+        <div style="margin-top: 10px; font-size: 0.82rem; color: var(--text-secondary);" id="bank-count-label"></div>
+      </div>
+
+      <div id="bank-questions-container">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ==================== 7. VIEW: SCORE HISTORY & ANALYTICS ==================== -->
+    <section id="view-history" class="view-section">
+      <div class="triple-modes-grid">
+        <div class="panel-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>⚡ Lịch sử Ôn tập (Hiện đáp án ngay)</h3>
+            <span class="pill" id="hist-prac-count">0 lượt</span>
+          </div>
+          <p class="panel-subtitle">Các phiên ôn tập phản hồi đáp án tức thì</p>
+          <div id="history-practice-list"></div>
+        </div>
+
+        <div class="panel-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>📘 Lịch sử Điểm - Chức năng 1 (Từng Chương)</h3>
+            <span class="pill" id="hist-ch-count">0 bài</span>
+          </div>
+          <p class="panel-subtitle">Các lần kiểm tra riêng từng chương kiến thức</p>
+          <div id="history-chapter-list"></div>
+        </div>
+
+        <div class="panel-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>🎓 Lịch sử Điểm - Chức năng 2 (Tổng Toàn Bộ)</h3>
+            <span class="pill" id="hist-full-count">0 bài</span>
+          </div>
+          <p class="panel-subtitle">Các lần thi tổng hợp toàn bộ kiến thức Đề cương OOP C#</p>
+          <div id="history-full-list"></div>
+        </div>
+      </div>
+
+      <div class="panel-card" style="margin-top: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+          <div>
+            <h3>⚠️ Danh sách Câu hỏi Hay làm sai / Cần ôn kỹ</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Hệ thống tự động ghi nhận các câu bạn trả lời sai trong quá trình làm bài để ôn tập khắc phục</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary btn-sm" onclick="app.practiceAllWrongQuestions()">
+              🔥 Làm bài ôn tập tất cả câu từng sai
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="app.clearAllHistory()">
+              🗑️ Xóa lịch sử
+            </button>
+          </div>
+        </div>
+        <div id="history-wrong-questions"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PDF TEXTBOOK VIEWER MODAL -->
+  <div class="modal-backdrop" id="pdf-modal" onclick="if(event.target===this) app.closePdfModal()">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div>
+          <strong id="pdf-modal-title">Đề cương bài giảng Lập trình hướng đối tượng với C#</strong>
+          <span class="pill" id="pdf-modal-page-badge" style="margin-left: 8px;">Trang PDF 1</span>
+        </div>
+        <div style="display:flex; gap: 8px; align-items: center;">
+          <select id="pdf-quick-jump" class="form-select" style="width:auto; padding:5px 10px; font-size:0.8rem;" onchange="app.jumpPdfPage(this.value)">
+            <option value="1">Bìa &amp; Giới thiệu Đề cương (Tr. 1)</option>
+            <option value="4">Chương 1: Tổng quan OOP &amp; C# cơ bản (Tr. 4)</option>
+            <option value="32">Chương 2: Lớp, Đóng gói, Properties &amp; Overloading (Tr. 32)</option>
+            <option value="52">Chương 3: Constructor, Destructor &amp; .NET GC (Tr. 52)</option>
+            <option value="64">Chương 4: Static, Nested Class &amp; Quan hệ lớp (Tr. 64)</option>
+            <option value="71">Chương 5: Kế thừa, sealed, Object &amp; Ép kiểu (Tr. 71)</option>
+            <option value="85">Chương 6: Đa hình (virtual/override/new) &amp; Operator (Tr. 85)</option>
+            <option value="92">Chương 7: Lớp trừu tượng (Abstract) (Tr. 92)</option>
+            <option value="104">Chương 8: Giao diện (Interface) &amp; Ngoại lệ (Tr. 104)</option>
+          </select>
+          <a id="pdf-external-link" href="De cuong OOPC#.pdf" target="_blank" class="btn btn-sm btn-subtle">
+            ↗ Mở tab mới
+          </a>
+          <button type="button" class="btn btn-sm btn-primary" onclick="app.closePdfModal()">
+            ✕ Đóng
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" id="pdf-modal-body">
+        <!-- iframe injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="questions_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
